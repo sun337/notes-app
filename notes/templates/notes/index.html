@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="w-100 h-100 d-table position-absolute">
+    <main role="main" class="container align-middle d-table-cell" >
+        <div class="w-50 mx-auto">
+            <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-primary nav-link">Login with Google</a>
+        </div>
+    </main>
+    </div>
+{% endblock content %}

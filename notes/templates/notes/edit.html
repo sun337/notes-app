@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="w-100 h-100 position-absolute">
+    <main role="main" class="container mt-5 " >
+        <a class="btn btn-primary" href="../../" >Back to all Notes</a>
+        <div class="mt-5 mx-auto">
+            <form action="" method="post">{% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" value="Save" />
+            </form>
+        </div>
+    </main>
+    </div>
+    <script>
+    $(document).ready(function(){
+        tinymce.init({
+            selector: 'textarea'
+        });
+        jQuery("form").submit(function(e) {
+            e.preventDefault();
+            var data =  tinyMCE.activeEditor.getContent() ;
+            var name = $("#id_title").val();
+            var fileId = window.location.pathname.split('/')[2];
+            $.ajax({
+                url: 'http://localhost:8000/update/'+fileId+'/',
+                type: 'POST',
+                data: {'name':name, 'data':data},
+                success: function (data) {
+                    console.info(data);
+                }
+            });
+        });
+        setInterval(function(){
+            var data =  tinyMCE.activeEditor.getContent() ;
+            var name = $("#id_title").val();
+            var fileId = window.location.pathname.split('/')[2];
+            $.ajax({
+                url: 'http://localhost:8000/update/'+fileId+'/',
+                type: 'POST',
+                data: {'name':name, 'data':data},
+                success: function (data) {
+                    console.info(data);
+                }
+            });
+        }, 30000);
+    });
+    </script>
+{% endblock content %}
